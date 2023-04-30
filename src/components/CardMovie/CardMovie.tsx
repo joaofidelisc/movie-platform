@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { View, TouchableOpacity, Image, Text, Dimensions } from "react-native";
+import { View, TouchableOpacity, Image, Text, Dimensions, StyleSheet } from "react-native";
 
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useDispatch, useSelector } from "react-redux";
-import { addFavoriteMovie } from "../../redux/slices/movieSlice";
+import { addFavoriteMovie, test } from "../../redux/slices/movieSlice";
+import Icon from 'react-native-vector-icons/Feather';
 
 import { styles } from "./CardMovieStyle";
 
@@ -18,9 +19,10 @@ interface CardMovieProps {
 
 function CardMovie(props: CardMovieProps) {
     const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
-    const dispatch = useDispatch(); //tipar
+    const dispatch = useDispatch();
 
     const addFavoriteMovieHandler = () => {
+        console.log("salvando nos favoritos...")
         const selectedMovie = {
             id: props.id,
             title: props.title,
@@ -29,28 +31,33 @@ function CardMovie(props: CardMovieProps) {
             releaseYear: props.releaseYear
         }
         dispatch(addFavoriteMovie(selectedMovie));
+        // dispatch(test('a'));
     }
 
     return (
-        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+        <View style={styles.viewContainer}>
             <View style={styles.card}>
                 <Image style={styles.image} source={{ uri: props.imageUrl }} />
             </View>
             <View style={{flex:1}}>
-                <Text>{props.title}</Text>
-                <Text>{props.rating}</Text>
-                <Text>{props.releaseYear}</Text>
+                <Text style={styles.title}>{props.title}</Text>
+                <View style={styles.viewRatingAndRY}>
+                    <Text style={styles.ratingAndRY}>{props.rating}</Text>
+                    <Icon name="star" color = 'black' size={15}/>
+                    <Text style={styles.ratingAndRY}> | </Text>
+                    <Text style={styles.ratingAndRY}>{props.releaseYear}</Text>
+                </View>
                 <TouchableOpacity
-                    style={{backgroundColor: '#6759C0', width: '65%', height:'15%', justifyContent: 'center', alignItems:'center', borderRadius:10, marginTop: '10%'}}
+                    style={styles.button}
                     onPress={()=>navigation.navigate("Detalhes")}
                 >
-                    <Text style={{color:'white'}}>Mais informações</Text>
+                    <Text style={styles.buttonText}>Mais informações</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={{backgroundColor: '#6759C0', width: '65%', height:'15%', justifyContent: 'center', alignItems:'center', borderRadius:10, marginTop: '10%'}}
+                    style={styles.button}
                     onPress={addFavoriteMovieHandler}
                 >
-                    <Text style={{color:'white'}}>Salvar nos favoritos</Text>
+                    <Text style={styles.buttonText}>Salvar nos favoritos</Text>
                 </TouchableOpacity>
             </View>
         </View>

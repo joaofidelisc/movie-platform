@@ -87,7 +87,7 @@ function Lista() {
     <View style={{flex: 1, justifyContent: 'center'}}>
       <View style={{position: 'absolute', top: 0, width: '100%', height: height*0.1, backgroundColor: '#6759C0'}}> 
         <TextInput
-          style={{color: 'black', width: '80%', backgroundColor:'#E6E9F1',height: height*0.05, position: 'absolute', top:height*0.04, borderRadius: 10, marginLeft: '4%' }}
+          style={{color: 'black', width: '80%', backgroundColor:'#E6E9F1',height: height*0.05, position: 'absolute', top:height*0.04, borderRadius: 10, marginLeft: '4%', padding: 5 }}
           placeholderTextColor='black'
           placeholder='Busca'
           onChangeText={(text)=>setSearchFor(text as never)}

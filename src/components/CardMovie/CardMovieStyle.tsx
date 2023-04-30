@@ -1,6 +1,13 @@
 import { StyleSheet, Dimensions } from "react-native";
 
+const { width, height } = Dimensions.get('window');
+
 export const styles = StyleSheet.create({
+  viewContainer:{
+    flex: 1, 
+    flexDirection: 'row', 
+    alignItems: 'center'
+  },
   card: {
     backgroundColor: "white",
     borderRadius: 10,
@@ -20,11 +27,29 @@ export const styles = StyleSheet.create({
     marginBottom: '4%'
   },
   title: {
-    fontSize: 18,
+    fontSize: width * 0.042,
     fontWeight: "bold",
     marginBottom: 5,
   },
-  rating: {
-    fontSize: 16,
+  ratingAndRY: {
+    fontSize: width * 0.04,
   },
+  viewRatingAndRY:{
+    flexDirection: 'row',
+    alignItems: 'center',    
+    justifyContent: 'flex-start'
+  },
+  button:{
+    backgroundColor: '#6759C0', 
+    width: '75%', 
+    height:'15%', 
+    justifyContent: 'center', 
+    alignItems:'center', 
+    marginTop: '10%',
+    borderRadius:10, 
+  },
+  buttonText:{
+    color: 'white',
+    fontSize: width * 0.035
+  }
 });
