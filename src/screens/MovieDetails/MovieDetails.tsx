@@ -42,7 +42,11 @@ function MovieDetails() {
   }, [id]);
 
   if (!movie){
-    return <Text>Carregando...</Text>
+    return (
+      <View style={styles.viewLoading}>
+        <Text style={styles.loading}>Carregando...</Text>
+      </View>
+    )
   }
 
   return (

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, ScrollView, TextInput, Dimensions, TouchableOpacity } from 'react-native';
+import { View, ScrollView, TextInput, Dimensions, TouchableOpacity, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CardMovie from '../../components/CardMovie/CardMovie';
@@ -20,6 +20,16 @@ function Favorites() {
 
   const handleSelectByGenre = (id) => {
     setIdGenre(id);
+  }
+  
+  if (favoriteMoviesList.length == 0){
+    return(
+      <View style={styles.viewLoading}>
+        <Text style={styles.loading}>Lista de favoritos vazia!</Text>
+        <SearchBar handleSearchMovie={handleSearchMovie} handleSelectByGenre={handleSelectByGenre}/>
+        <StatusBar style='light' hidden={false} translucent={false}/>
+      </View>    
+    )
   }
 
   return (

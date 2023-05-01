@@ -12,5 +12,9 @@ export const styles = StyleSheet.create({
         height: '100%',
         width:'100%', 
         marginTop: '22%'
+    },
+    loading: {
+        alignSelf:'center',
+        fontSize: width * 0.042
     }
 });

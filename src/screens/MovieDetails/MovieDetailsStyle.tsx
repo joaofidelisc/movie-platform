@@ -96,7 +96,12 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     margin: '4%'
   },
-  contentContainer: {
-    // marginTop: width * 0.04
+  viewLoading: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  loading: {
+    alignSelf: 'center',
+    fontSize: width * 0.042,
   }
 });

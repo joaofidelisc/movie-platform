@@ -5,17 +5,65 @@ import { styles } from './PagePickerStyles';
 
 function PagePicker({currentPage, totalPages, onPageChange}){
     const [pages, setPages] = useState(() => {
+    // const [lastPage, setLastPage] = useState(currentPage + 5);
+    
         const initialPages = [];
             for (let i = 0; i < 5; i++) {
-                initialPages.push(currentPage + i);
+                initialPages.push(currentPage + i + 1);
             }
         return initialPages;
     });
-      
+    
+    useEffect(()=>{
+        if (currentPage > pages[2]){
+            if (currentPage + 3 >= totalPages){
+                setPages(()=>{
+                    const newPages = [];
+                    for (let i = 5; i > 0; i--){
+                        newPages.push(totalPages - i);
+                    }
+                    return newPages;
+                });
+            }else{
+                setPages(()=>{
+                    const newPages = [];
+                    for (let i = 0; i < 5; i++){
+                        newPages.push(currentPage + i);
+                    }
+                    return newPages;
+                });
+            }
+        }
+        
+        else if (currentPage == 1){
+            setPages(()=>{
+                const newPages = [];
+                for (let i = 0; i < 5; i++){
+                    newPages.push(currentPage + i + 1);
+                }
+                return newPages;
+            });
+        }
+    }, [currentPage])
     
     return(
         <View style={styles.viewContainer}>
             <View style={styles.viewButtons}>
+                {
+                    currentPage === 1?
+                    <TouchableOpacity
+                        style={styles.selectedButton}
+                        onPress={()=>onPageChange(1)}
+                    >
+                        <Text style={styles.textSelectedItem}>1</Text>
+                    </TouchableOpacity>:
+                    <TouchableOpacity
+                        style={styles.buttonPage}
+                        onPress={()=>onPageChange(1)}
+                    >
+                        <Text style={styles.textItem}>1</Text>
+                    </TouchableOpacity>
+                }
                 {
                     pages.map(page =>(
                         page == currentPage?
@@ -34,6 +82,21 @@ function PagePicker({currentPage, totalPages, onPageChange}){
                             <Text style={styles.textItem}>{page}</Text>
                         </TouchableOpacity>
                     ))
+                }
+                  {
+                    currentPage === totalPages?
+                    <TouchableOpacity
+                        style={styles.selectedButton}
+                        onPress={()=>onPageChange(totalPages)}
+                    >
+                        <Text style={styles.textSelectedItem}>{totalPages}</Text>
+                    </TouchableOpacity>:
+                    <TouchableOpacity
+                        style={styles.buttonPage}
+                        onPress={()=>onPageChange(totalPages)}
+                    >
+                        <Text style={styles.textItem}>{totalPages}</Text>
+                    </TouchableOpacity>
                 }
             </View>
         </View>

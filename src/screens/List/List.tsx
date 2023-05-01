@@ -49,7 +49,7 @@ function Lista() {
   const [searchFor, setSearchFor] = useState('');
   const [idGenre, setIdGenre] = useState(null);
   
-  const [totalPages, setTotalPages] = useState(100);
+  const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
 
 
@@ -60,7 +60,7 @@ function Lista() {
   
   const movieList = useSelector(state => state.movie.movieList);
 
-  const handleSearchMovie = (text:string) => {
+  const handleSearchMovie = (text) => {
     setSearchFor(text);
   }
 
@@ -76,7 +76,7 @@ function Lista() {
     const fetchGenre = () => {
       fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=86d244a6682bede82e0fd58ab028b3c2&language=pt-BR')
       .then(res => res.json())
-      .then(json => dispatch(addGenreList(json)))
+      .then(json => dispatch(addGenreList(json))).then(json => setTotalPages(json.totalPages))
       .catch(err => console.log(err));
     }
     fetchGenre();
@@ -94,7 +94,11 @@ function Lista() {
 
   
   if (!movieList){
-    return <Text>Carregando...</Text>
+    return (
+      <View style={styles.viewContainer}>
+        <Text style={styles.loading}>Carregando...</Text>
+      </View>
+    )
   }
 
   return (
@@ -134,7 +138,7 @@ function Lista() {
         ))}
         </ScrollView>
         <SearchBar handleSearchMovie={handleSearchMovie} handleSelectByGenre={handleSelectByGenre}/>
-        <PagePicker currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange}/>
+        <PagePicker currentPage={currentPage} totalPages={20} onPageChange={handlePageChange}/>
         <StatusBar style='light' hidden={false} translucent={false}/>
     </View>
   );
