@@ -16,7 +16,6 @@ const movieSlice = createSlice({
         },
         addFavoriteMovie(state, action){
             const movieInfo = action.payload;
-            console.log("movieInfo:", movieInfo)
             const movieExists = state.favoriteMovies.find((movie) => movie.id === movieInfo.id);
             if (!movieExists){
                 state.favoriteMovies.push({

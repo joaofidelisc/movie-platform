@@ -45,7 +45,7 @@ export const styles = StyleSheet.create({
     height:'15%', 
     justifyContent: 'center', 
     alignItems:'center', 
-    marginTop: '10%',
+    marginTop: '4%',
     borderRadius:10, 
   },
   buttonAddFavorites: {
@@ -53,8 +53,8 @@ export const styles = StyleSheet.create({
     width: '75%', 
     height:'15%', 
     justifyContent: 'center', 
-    alignItems:'center', 
-    marginTop: '10%',
+    alignItems:'center',
+    marginTop: '4%', 
     borderRadius:10, 
   },
   buttonRemoveFavorites: {
@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
     height:'15%', 
     justifyContent: 'center', 
     alignItems:'center', 
-    marginTop: '10%',
+    marginTop: '4%',
     borderRadius:10, 
   },
   buttonText: {

@@ -24,7 +24,6 @@ function MovieDetails() {
   }
 
   useEffect(()=>{
-    console.log('id:', id);
     const fetchMovieDetails = () =>{
       fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=86d244a6682bede82e0fd58ab028b3c2&language=pt-BR`)
       .then(res => res.json())

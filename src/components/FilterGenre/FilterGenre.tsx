@@ -10,7 +10,6 @@ function FilterGenre({handleSelectedFilter, handleSelectByGenre}) {
   const genreList = useSelector(state => state.movie.genreList);
 
   const handleSelectGenre = (id) => {
-    console.log("Genero id:", id)
     handleSelectByGenre(id);
     handleSelectedFilter(false);
   }
