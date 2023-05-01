@@ -10,7 +10,7 @@ const reducer = combineReducers({
 });
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   version: 1,
   storage: AsyncStorage,
 };

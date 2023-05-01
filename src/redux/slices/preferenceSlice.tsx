@@ -1,13 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 const initialState = {
     favoriteMovies: []
 }
 
-const movieSlice = createSlice({
-    name: 'movie',
+const preferenceSlice = createSlice({
+    name: 'preference',
     initialState,
     reducers: {
         addFavoriteMovie(state, action){
@@ -31,5 +29,5 @@ const movieSlice = createSlice({
     },
 });
 
-export const { addFavoriteMovie, removeFavoriteMovie} = movieSlice.actions;
-export default movieSlice.reducer;
+export const { addFavoriteMovie, removeFavoriteMovie} = preferenceSlice.actions;
+export default preferenceSlice.reducer;

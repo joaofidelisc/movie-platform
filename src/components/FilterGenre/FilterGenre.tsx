@@ -14,7 +14,7 @@ function FilterGenre({handleSelectedFilter, genreList}) {
           onPress={()=>handleSelectedFilter(false)}
           style={{position: 'absolute', top: height*0.05, right: width*0.04}}
         >
-          <Icon name="x" color = 'white' size={height*0.03}/>
+          <Icon name='x' color = 'white' size={height*0.03}/>
         </TouchableOpacity>
         {
           genreList.genres && 

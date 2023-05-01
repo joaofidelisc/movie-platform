@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -9,17 +9,17 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   card: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 10,
-    overflow: "hidden",
+    overflow: 'hidden',
     margin: '4%',
-    width: "40%",
+    width: '40%',
     alignItems:'center',
     alignSelf:'center', 
   },
   image: {
-    width: "100%",
-    height: Dimensions.get("window").height / 4,
+    width: '100%',
+    height: Dimensions.get('window').height / 4,
     resizeMode: 'stretch',
   },
   detailsContainer: {
@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontSize: width * 0.042,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 5,
   },
   ratingAndRY: {
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',    
     justifyContent: 'flex-start'
   },
-  button:{
+  commonButton: {
     backgroundColor: '#6759C0', 
     width: '75%', 
     height:'15%', 
@@ -48,7 +48,25 @@ export const styles = StyleSheet.create({
     marginTop: '10%',
     borderRadius:10, 
   },
-  buttonText:{
+  buttonAddFavorites: {
+    backgroundColor: '#6759C0', 
+    width: '75%', 
+    height:'15%', 
+    justifyContent: 'center', 
+    alignItems:'center', 
+    marginTop: '10%',
+    borderRadius:10, 
+  },
+  buttonRemoveFavorites: {
+    backgroundColor: '#9B0C01', 
+    width: '75%', 
+    height:'15%', 
+    justifyContent: 'center', 
+    alignItems:'center', 
+    marginTop: '10%',
+    borderRadius:10, 
+  },
+  buttonText: {
     color: 'white',
     fontSize: width * 0.035
   }

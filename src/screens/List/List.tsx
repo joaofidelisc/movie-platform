@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, ScrollView, TextInput, Dimensions, TouchableOpacity } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Feather';
 
 import CardMovie from '../../components/CardMovie/CardMovie';
 import FilterGenre from '../../components/FilterGenre/FilterGenre';
+import SearchBar from '../../components/SearchBar/SearchBar';
 
 interface Movie {
   adult: boolean;
@@ -48,6 +48,7 @@ function Lista() {
   const [genreList, setGenreList] = useState<GenreList>({ genre: []});
   const [searchFor, setSearchFor] = useState('');
   const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [filterGenre, setFilterGenre] = useState('');
   const [selectedFilter, setSelectedFilter] = useState(false);
 
@@ -59,48 +60,40 @@ function Lista() {
     setSelectedFilter(state);
   }
 
+  const handleSearchMovie = (text:string) => {
+    setSearchFor(text);
+  }
+
+  const handleSelectFilter = () => {
+    setSelectedFilter(true);
+  }
 
   useEffect(()=>{
-    fetch('https://api.themoviedb.org/3/discover/movie?api_key=86d244a6682bede82e0fd58ab028b3c2&language=pt-BR&page=1')
-      .then(res => res.json())
-      .then(json => setMovieList(json))
-      .catch(err => console.log(err));
-    
-    fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=86d244a6682bede82e0fd58ab028b3c2&language=pt-BR')
-      .then(res => res.json())
-      .then(json => setGenreList(json))
-      .catch(err => console.log(err));
-    console.log('total pages:', totalPages);
+    const fetchMovies = () =>{
+      fetch('https://api.themoviedb.org/3/movie/popular?api_key=86d244a6682bede82e0fd58ab028b3c2&language=pt-BR&page=1')
+        .then(res => res.json())
+        .then(json => setMovieList(json))
+        .catch(err => console.log(err));
+    }
+    fetchMovies();
   }, []);
 
   useEffect(()=>{
     if (searchFor.trim()){
-      console.log("preencheu!!!");
+      console.log('preencheu!!!');
     }else{
       console.log('vazio');
     }
-    // console.log("pesquisando...");
+    // console.log('pesquisando...');
   }, [searchFor])
 
+  if (!movieList){
+    return <Text>Carregando...</Text>
+  }
 
   return (
     <View style={{flex: 1, justifyContent: 'center'}}>
-      <View style={{position: 'absolute', top: 0, width: '100%', height: height*0.1, backgroundColor: '#6759C0'}}> 
-        <TextInput
-          style={{color: 'black', width: '80%', backgroundColor:'#E6E9F1',height: height*0.05, position: 'absolute', top:height*0.04, borderRadius: 10, marginLeft: '4%', padding: 5 }}
-          placeholderTextColor='black'
-          placeholder='Busca'
-          onChangeText={(text)=>setSearchFor(text as never)}
-          //tipar dps
-        />
-        <TouchableOpacity 
-          onPress={() => handleSelectedFilter(true)}
-          style={{position: 'absolute', top: height*0.05, right: width*0.04}}
-        >
-          <Icon name="filter" color = 'white' size={height*0.03}/>
-        </TouchableOpacity>
-       
-      </View>
+      <SearchBar handleSearchMovie={handleSearchMovie} handleSelectFilter={handleSelectFilter}/>
       <ScrollView style={{flex:1, height: '100%', width:'100%', marginTop: '22%'}}>
       {
         movieList.results &&
@@ -113,13 +106,15 @@ function Lista() {
               imageUrl={`${BASE_IMAGE_URL}/${imageSize}/${movie.poster_path}`}
               rating={movie.vote_average}
               releaseYear={new Date(movie.release_date).getFullYear()}
+              overview={movie.overview}
+              favorites={false}
             />:<></>
         ))}
         </ScrollView>
-        {
+        {/* {
           selectedFilter &&
           <FilterGenre handleSelectedFilter={handleSelectedFilter} genreList={genreList}/>
-        }
+        } */}
         <StatusBar style='light' hidden={false} translucent={false}/>
     </View>
   );
