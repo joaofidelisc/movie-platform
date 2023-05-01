@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import FilterGenre from '../FilterGenre/FilterGenre';
-
 import { styles } from './SearchBarStyles';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 interface Props {
     handleSearchMovie: (text: string) => void;

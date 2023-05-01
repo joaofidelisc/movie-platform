@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Image, Text, Dimensions, StyleSheet, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
+import Icon from 'react-native-vector-icons/Feather';
 import StarRating from 'react-native-star-rating';
 
 
@@ -54,7 +55,8 @@ function MovieDetails() {
     fetchMovieCredits()
   }, [id]);
 
-  if (!movie){
+
+  if (!movie && !movieCredits){
     return (
       <View style={styles.viewLoading}>
         <Text style={styles.loading}>Carregando...</Text>
@@ -104,20 +106,48 @@ function MovieDetails() {
           <Text style={styles.title}>Sinopse</Text>
             <Text style={styles.overview}>{movie.overview}</Text>
         </View>
-        <Text style={styles.title}>Empresas de produção</Text>
-        <ScrollView 
-          style={styles.scrollViewItem}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        >
-        {
-          movie.production_companies.map((company) => (
-            <View key={company.id} style={styles.companyView}>
-              <Image style={styles.imageItem} source={{ uri: `https://image.tmdb.org/t/p/w500/${company.logo_path}` }} />
-            </View>
-          ))
-        }
-         </ScrollView>
+        <View style={styles.wrapper}>
+          <Icon name='arrow-left' color = '#6759C0' size={25} style={styles.arrowLeft}/>
+          <Text style={[styles.title, styles.extraTitle]}>Atores</Text>
+          <ScrollView 
+            style={styles.scrollViewItem}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          >
+          {
+            movieCredits &&
+            movieCredits.cast.map((credit) => (
+              <View key={credit.id} style={styles.artistView}>
+                {
+                  credit.profile_path &&
+                  <Image style={styles.artistImage} source={{ uri: `https://image.tmdb.org/t/p/w500/${credit.profile_path}` }} />
+                }
+                <Text style={styles.artistName}>{credit.character}</Text>
+                <Text style={styles.artistName}>{credit.name}</Text>
+              </View>
+            ))
+          }
+          </ScrollView>
+          <Icon name='arrow-right' color = '#6759C0' size={25} style={styles.arrowRight}/>
+        </View>
+        <View style={styles.wrapper}>
+          <Icon name='arrow-left' color = '#6759C0' size={25} style={styles.arrowLeft}/>
+          <Text style={[styles.title, styles.extraTitleCompany]}>Empresas de produção</Text>
+          <ScrollView 
+            style={styles.scrollViewItem}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          >
+          {
+            movie.production_companies.map((company) => (
+              <View key={company.id} style={styles.companyView}>
+                <Image style={styles.imageItem} source={{ uri: `https://image.tmdb.org/t/p/w500/${company.logo_path}`}} />
+              </View>
+            ))
+          }
+          </ScrollView>
+          <Icon name='arrow-right' color = '#6759C0' size={25} style={styles.arrowRight}/>
+        </View>
       </ScrollView>
       <StatusBar style='light' hidden={false} translucent={false}/>
     </View>

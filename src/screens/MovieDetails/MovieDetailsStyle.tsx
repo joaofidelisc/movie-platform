@@ -69,10 +69,16 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  artistView: {
+    flex:1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   companyView: {
     flex:1,
     alignItems: 'center',
     justifyContent: 'center',
+    width: width
   },
   imageItem: {
     width: width * 0.4,
@@ -98,5 +104,41 @@ export const styles = StyleSheet.create({
   loading: {
     alignSelf: 'center',
     fontSize: width * 0.042,
-  }
+  },
+  artistImage: {
+    width: width * 0.4,
+    marginLeft: width * 0.04,
+    marginRight: width * 0.04,
+    alignSelf: 'center',
+    aspectRatio: 1,
+    resizeMode: 'contain',
+    borderRadius: 10,
+  },
+  artistName: {
+    fontSize: width * 0.04,
+    fontWeight: '500',
+    marginTop: width * 0.01,
+  },
+  extraTitle: {
+    marginTop: '2%'
+  },
+  extraTitleCompany: {
+    marginTop: '6%'
+  },
+  wrapper: {
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  arrowLeft: {
+    position: 'absolute',
+    left: 0,
+    zIndex: 1
+  },
+  arrowRight: {
+    position: 'absolute',
+    right: 0,
+    zIndex: 1
+  },
+ 
 });
