@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, ScrollView, TextInput, Dimensions, TouchableOpacity } from 'react-native';
+import { View, ScrollView, TextInput, Dimensions, TouchableOpacity, Text } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addGenreList } from '../../redux/slices/movieSlice';
+import { addGenreList, addMovieList } from '../../redux/slices/movieSlice';
 import CardMovie from '../../components/CardMovie/CardMovie';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import { styles } from './ListStyle';
 
 interface Movie {
   adult: boolean;
@@ -44,26 +45,37 @@ interface TotalPages {
 const { width, height } = Dimensions.get('window');
 
 function Lista() {
-  const [movieList, setMovieList] = useState<MovieList>({ results: [] });
   const [searchFor, setSearchFor] = useState('');
+  const [idGenre, setIdGenre] = useState(null);
   
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
+
+  const dispatch = useDispatch();
+
   const BASE_IMAGE_URL = 'https://image.tmdb.org/t/p';
   const imageSize = 'w1280';
   
-  const dispatch = useDispatch();
+  const movieList = useSelector(state => state.movie.movieList);
 
   const handleSearchMovie = (text:string) => {
     setSearchFor(text);
   }
 
+  const handleSelectByGenre = (id) => {
+    setIdGenre(id);
+  }
+
+  const handleSelectPage = (selectedPage) => {
+    setCurrentPage(selectedPage);
+  }
+
   useEffect(()=>{
     const fetchMovies = () =>{
-      fetch('https://api.themoviedb.org/3/movie/popular?api_key=86d244a6682bede82e0fd58ab028b3c2&language=pt-BR&page=1')
+      fetch(`https://api.themoviedb.org/3/movie/popular?api_key=86d244a6682bede82e0fd58ab028b3c2&language=pt-BR&page=${currentPage}`)
         .then(res => res.json())
-        .then(json => setMovieList(json))
+        .then(json => dispatch(addMovieList(json)))
         .catch(err => console.log(err));
     }
     const fetchGenre = () => {
@@ -76,16 +88,16 @@ function Lista() {
     fetchGenre();
   }, []);
 
-
+  
   if (!movieList){
     return <Text>Carregando...</Text>
   }
 
   return (
-    <View style={{flex: 1, justifyContent: 'center'}}>
-      <ScrollView style={{flex:1, height: '100%', width:'100%', marginTop: '22%'}}>
+    <View style={styles.viewContainer}>
+      <ScrollView style={styles.scrollView}>
       {
-        movieList.results &&
+        !idGenre && movieList.results &&
         movieList.results.map(movie =>(
           movie.title.toLowerCase().includes(searchFor.toLowerCase())?
             <CardMovie
@@ -97,10 +109,27 @@ function Lista() {
               releaseYear={new Date(movie.release_date).getFullYear()}
               overview={movie.overview}
               favorites={false}
+              genreIds={movie.genre_ids}
+            />:<></>
+        ))}
+         {
+        idGenre && movieList.results &&
+        movieList.results.map(movie =>(
+          movie.title.toLowerCase().includes(searchFor.toLowerCase()) && movie.genre_ids.includes(idGenre)?
+            <CardMovie
+              key={movie.id}
+              id={movie.id}
+              title={movie.title}
+              imageUrl={`${BASE_IMAGE_URL}/${imageSize}/${movie.poster_path}`}
+              rating={movie.vote_average}
+              releaseYear={new Date(movie.release_date).getFullYear()}
+              overview={movie.overview}
+              favorites={false}
+              genreIds={movie.genre_ids}
             />:<></>
         ))}
         </ScrollView>
-        <SearchBar handleSearchMovie={handleSearchMovie}/>
+        <SearchBar handleSearchMovie={handleSearchMovie} handleSelectByGenre={handleSelectByGenre}/>
         <StatusBar style='light' hidden={false} translucent={false}/>
     </View>
   );

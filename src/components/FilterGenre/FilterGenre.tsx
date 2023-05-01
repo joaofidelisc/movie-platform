@@ -6,8 +6,14 @@ import { styles } from './FilterGenreStyle';
 
 const { width, height } = Dimensions.get('window');
 
-function FilterGenre({handleSelectedFilter}) {
+function FilterGenre({handleSelectedFilter, handleSelectByGenre}) {
   const genreList = useSelector(state => state.movie.genreList);
+
+  const handleSelectGenre = (id) => {
+    console.log("Genero id:", id)
+    handleSelectByGenre(id);
+    handleSelectedFilter(false);
+  }
 
   return (
     <View style={styles.viewContainer}>
@@ -22,12 +28,19 @@ function FilterGenre({handleSelectedFilter}) {
           genreList.genres.map(genre =>(
             <TouchableOpacity
               key={genre.id}
-              style={styles.buttonGenre}          
+              style={styles.buttonGenre}
+              onPress={()=>handleSelectGenre(genre.id)}          
             >
               <Text style={styles.textItem}>{genre.name}</Text>
             </TouchableOpacity>
           ))
-        } 
+        }
+        <TouchableOpacity 
+          style={styles.filterRemove}
+          onPress={()=>handleSelectGenre(null)}
+        >
+          <Text style={styles.filterRemoveText}>Remover filtros</Text>
+        </TouchableOpacity> 
     </View>
   );
 }

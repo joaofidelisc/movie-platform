@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import CardMovie from '../../components/CardMovie/CardMovie';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import { styles } from './FavoritesStyles';
 
 function Favorites() {
 
   const [searchFor, setSearchFor] = useState('');
+  const [idGenre, setIdGenre] = useState(null);
 
   const favoriteMoviesList = useSelector(state => state.movie.favoriteMovies);
 
@@ -16,11 +18,15 @@ function Favorites() {
     setSearchFor(text);
   }
 
+  const handleSelectByGenre = (id) => {
+    setIdGenre(id);
+  }
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ScrollView style={{flex:1, height: '100%', width:'100%', marginTop: '22%'}}>
+    <View style={styles.viewContainer}>
+        <ScrollView style={styles.scrollView}>
       {
-        favoriteMoviesList &&
+        !idGenre && favoriteMoviesList &&
         favoriteMoviesList.map(movie =>(
           movie.title.toLowerCase().includes(searchFor.toLowerCase())?
             <CardMovie
@@ -33,8 +39,22 @@ function Favorites() {
               favorites={true}
             />:<></>
         ))}
+          {
+        idGenre && favoriteMoviesList &&
+        favoriteMoviesList.map(movie =>(
+          movie.title.toLowerCase().includes(searchFor.toLowerCase()) && movie.genreIds.includes(idGenre)?
+            <CardMovie
+              key={movie.id}
+              id={movie.id}
+              title={movie.title}
+              imageUrl={movie.imageUrl}
+              rating={movie.rating}
+              releaseYear={movie.releaseYear}
+              favorites={true}
+            />:<></>
+        ))}
         </ScrollView>
-      <SearchBar handleSearchMovie={handleSearchMovie}/>
+      <SearchBar handleSearchMovie={handleSearchMovie} handleSelectByGenre={handleSelectByGenre}/>
       <StatusBar style='light' hidden={false} translucent={false}/>
     </View>
   );

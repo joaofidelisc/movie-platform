@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, TouchableOpacity, Image, Text, Dimensions, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, TouchableOpacity, Image, Text } from 'react-native';
 
 import { useNavigation, ParamListBase } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -17,6 +17,7 @@ interface CardMovieProps {
   id: number;
   favorites: boolean;
   overview: string;
+  genreIds: []
 }
 
 function CardMovie(props: CardMovieProps) {
@@ -29,7 +30,8 @@ function CardMovie(props: CardMovieProps) {
             title: props.title,
             imageUrl: props.imageUrl,
             rating: props.rating,
-            releaseYear: props.releaseYear
+            releaseYear: props.releaseYear,
+            genreIds: props.genreIds
         }
         dispatch(addFavoriteMovie(selectedMovie));
     }
@@ -79,7 +81,6 @@ function CardMovie(props: CardMovieProps) {
                         <Text style={styles.buttonText}>Remover dos favoritos</Text>
                     </TouchableOpacity>
                 }
-                
             </View>
         </View>
     );

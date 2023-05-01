@@ -24,5 +24,20 @@ export const styles = StyleSheet.create({
     },
     buttonGenre: {
         width: width * 0.5
+    },
+    filterRemove: {
+        position: 'absolute',
+        top: height * 0.71,
+        width: width * 0.4,
+        right: width * 0.04,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    filterRemoveText: {
+        fontSize: height * 0.022,
+        margin: width * 0.04,
+        color: '#6759C0',
     }
 });
