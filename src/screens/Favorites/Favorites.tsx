@@ -14,7 +14,7 @@ function Favorites() {
 
   const favoriteMoviesList = useSelector(state => state.movie.favoriteMovies);
 
-  const handleSearchMovie = (text:string) => {
+  const handleSearchMovie = (text) => {
     setSearchFor(text);
   }
 

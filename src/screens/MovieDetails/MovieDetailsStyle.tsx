@@ -9,11 +9,6 @@ export const styles = StyleSheet.create({
     flex: 1, 
     alignItems: 'center'
   },
-  viewGeneralInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   card: {
     backgroundColor: 'white',
     borderRadius: 10,

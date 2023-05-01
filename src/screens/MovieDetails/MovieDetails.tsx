@@ -4,20 +4,34 @@ import { StatusBar } from 'expo-status-bar';
 
 import StarRating from 'react-native-star-rating';
 
-import Icon from 'react-native-vector-icons/Feather';
 
 const { width, height } = Dimensions.get('window');
 import { styles } from './MovieDetailsStyle';
 import { useRoute } from '@react-navigation/native';
 
+interface Movie {
+  title: string;
+  vote_average: number;
+  original_language: string;
+  release_date: string;
+  runtime: number;
+  overview: string;
+  production_companies: Array<{
+    id: number;
+    logo_path: string;
+  }>;
+  poster_path: string;
+}
+
+
 function MovieDetails() {
   const route = useRoute();
-  const [movie, setMovie] = useState(null);
+  const [movie, setMovie] = useState<Movie | null>(null);
   const [movieCredits, setMovieCredits] = useState(null);
   
   const { id } = route.params;
 
-  const minutesToHours = (minutes) => {
+  const minutesToHours = (minutes:number) => {
     const hours = Math.floor(minutes/60);
     const remainingMinutes = minutes%60;
     return `${hours}h${remainingMinutes}m`;
@@ -95,7 +109,6 @@ function MovieDetails() {
           style={styles.scrollViewItem}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.contentContainer}
         >
         {
           movie.production_companies.map((company) => (

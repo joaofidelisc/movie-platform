@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Image, Text, Share, Alert } from 'react-native'
 
 import { useNavigation, ParamListBase } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addFavoriteMovie, removeFavoriteMovie } from '../../redux/slices/movieSlice';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -19,7 +19,7 @@ interface CardMovieProps {
   id: number;
   favorites: boolean;
   overview: string;
-  genreIds: []
+  genreIds: number[]
 }
 
 function CardMovie(props: CardMovieProps) {

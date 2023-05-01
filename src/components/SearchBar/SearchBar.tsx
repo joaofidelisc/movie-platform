@@ -7,10 +7,15 @@ import { styles } from './SearchBarStyles';
 
 const {width, height} = Dimensions.get('window');
 
-function SearchBar({handleSearchMovie, handleSelectByGenre}){
+interface Props {
+    handleSearchMovie: (text: string) => void;
+    handleSelectByGenre: (genreId: number | null) => void;
+}
+
+function SearchBar({handleSearchMovie, handleSelectByGenre}: Props){
     const [openFilter, setOpenFilter] = useState(false);   
     
-    const handleSelectedFilter = (state) => {
+    const handleSelectedFilter = (state: boolean) => {
         setOpenFilter(state)
     }
 

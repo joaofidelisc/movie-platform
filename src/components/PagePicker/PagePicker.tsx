@@ -3,7 +3,13 @@ import { View, Text, TouchableOpacity } from 'react-native';
 
 import { styles } from './PagePickerStyles';
 
-function PagePicker({currentPage, totalPages, onPageChange}){
+interface PagePickerProps {
+    currentPage: number,
+    totalPages: number,
+    onPageChange: (page: number) => void,
+} 
+
+function PagePicker({currentPage, totalPages, onPageChange}: PagePickerProps){
     const [pages, setPages] = useState(() => {
     
         const initialPages = [];

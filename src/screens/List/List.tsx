@@ -33,24 +33,23 @@ interface Genre {
 
 interface MovieList {
   results: Movie[];
+  total_pages: number;
 }
 
 interface GenreList {
-  genre: Genre[];
+  genres: Genre[];
 }
 
 interface TotalPages {
   total_pages: number;
 }
 
-const { width, height } = Dimensions.get('window');
 
 function Lista() {
-  const [searchFor, setSearchFor] = useState('');
-  const [idGenre, setIdGenre] = useState(null);
-  
-  const [totalPages, setTotalPages] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [searchFor, setSearchFor] = useState<string>('');
+  const [idGenre, setIdGenre] = useState<number | null>(null);
+  const [totalPages, setTotalPages] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
 
   const dispatch = useDispatch();
@@ -58,17 +57,17 @@ function Lista() {
   const BASE_IMAGE_URL = 'https://image.tmdb.org/t/p';
   const imageSize = 'w1280';
   
-  const movieList = useSelector(state => state.movie.movieList);
+  const movieList: MovieList = useSelector((state: any) => state.movie.movieList);
 
-  const handleSearchMovie = (text) => {
+  const handleSearchMovie = (text: string) => {
     setSearchFor(text);
   }
 
-  const handleSelectByGenre = (id) => {
+  const handleSelectByGenre = (id: number) => {
     setIdGenre(id);
   }
 
-  const handlePageChange = (page) =>{
+  const handlePageChange = (page: number) =>{
     setCurrentPage(page)
   }
 

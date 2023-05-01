@@ -6,11 +6,16 @@ import { styles } from './FilterGenreStyle';
 
 const { width, height } = Dimensions.get('window');
 
-function FilterGenre({handleSelectedFilter, handleSelectByGenre}) {
+interface Props{
+  handleSelectedFilter: (value: boolean) => void;
+  handleSelectByGenre: (id: number | null) => void;
+}
+
+function FilterGenre({handleSelectedFilter, handleSelectByGenre} : Props) {
   const genreList = useSelector(state => state.movie.genreList);
 
-  const handleSelectGenre = (id) => {
-    handleSelectByGenre(id);
+  const handleSelectGenre = (genreId: number | null) => {
+    handleSelectByGenre(genreId);
     handleSelectedFilter(false);
   }
 
