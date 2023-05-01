@@ -5,7 +5,6 @@ import { styles } from './PagePickerStyles';
 
 function PagePicker({currentPage, totalPages, onPageChange}){
     const [pages, setPages] = useState(() => {
-    // const [lastPage, setLastPage] = useState(currentPage + 5);
     
         const initialPages = [];
             for (let i = 0; i < 5; i++) {

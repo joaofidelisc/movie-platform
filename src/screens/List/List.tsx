@@ -49,7 +49,7 @@ function Lista() {
   const [searchFor, setSearchFor] = useState('');
   const [idGenre, setIdGenre] = useState(null);
   
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
 
 
@@ -92,8 +92,14 @@ function Lista() {
     fetchMovies();
   }, [currentPage]);
 
+  useEffect(()=>{
+    if (movieList && !totalPages){
+      setTotalPages(movieList.total_pages)
+    }
+  }, [movieList])
+
   
-  if (!movieList){
+  if (!movieList && !totalPages){
     return (
       <View style={styles.viewContainer}>
         <Text style={styles.loading}>Carregando...</Text>
