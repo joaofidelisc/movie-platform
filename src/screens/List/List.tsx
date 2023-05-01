@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addGenreList, addMovieList } from '../../redux/slices/movieSlice';
 import CardMovie from '../../components/CardMovie/CardMovie';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import PagePicker from '../../components/PagePicker/PagePicker';
 import { styles } from './ListStyle';
 
 interface Movie {
@@ -48,7 +49,7 @@ function Lista() {
   const [searchFor, setSearchFor] = useState('');
   const [idGenre, setIdGenre] = useState(null);
   
-  const [totalPages, setTotalPages] = useState(0);
+  const [totalPages, setTotalPages] = useState(100);
   const [currentPage, setCurrentPage] = useState(1);
 
 
@@ -67,9 +68,19 @@ function Lista() {
     setIdGenre(id);
   }
 
-  const handleSelectPage = (selectedPage) => {
-    setCurrentPage(selectedPage);
+  const handlePageChange = (page) =>{
+    setCurrentPage(page)
   }
+
+  useEffect(()=>{
+    const fetchGenre = () => {
+      fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=86d244a6682bede82e0fd58ab028b3c2&language=pt-BR')
+      .then(res => res.json())
+      .then(json => dispatch(addGenreList(json)))
+      .catch(err => console.log(err));
+    }
+    fetchGenre();
+  }, []);
 
   useEffect(()=>{
     const fetchMovies = () =>{
@@ -77,16 +88,9 @@ function Lista() {
         .then(res => res.json())
         .then(json => dispatch(addMovieList(json)))
         .catch(err => console.log(err));
-    }
-    const fetchGenre = () => {
-      fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=86d244a6682bede82e0fd58ab028b3c2&language=pt-BR')
-      .then(res => res.json())
-      .then(json => dispatch(addGenreList(json)))
-      .catch(err => console.log(err));
-    }
+    } 
     fetchMovies();
-    fetchGenre();
-  }, []);
+  }, [currentPage]);
 
   
   if (!movieList){
@@ -130,6 +134,7 @@ function Lista() {
         ))}
         </ScrollView>
         <SearchBar handleSearchMovie={handleSearchMovie} handleSelectByGenre={handleSelectByGenre}/>
+        <PagePicker currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange}/>
         <StatusBar style='light' hidden={false} translucent={false}/>
     </View>
   );
