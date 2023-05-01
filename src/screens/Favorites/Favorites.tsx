@@ -4,15 +4,17 @@ import { View, ScrollView, TextInput, Dimensions, TouchableOpacity } from 'react
 import { useDispatch, useSelector } from 'react-redux';
 
 import CardMovie from '../../components/CardMovie/CardMovie';
-import FilterGenre from '../../components/FilterGenre/FilterGenre';
+import SearchBar from '../../components/SearchBar/SearchBar';
 
-
-function Favorites(props) {
+function Favorites() {
 
   const [searchFor, setSearchFor] = useState('');
-  const [selectedFilter, setSelectedFilter] = useState(false);
 
   const favoriteMoviesList = useSelector(state => state.movie.favoriteMovies);
+
+  const handleSearchMovie = (text:string) => {
+    setSearchFor(text);
+  }
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -32,6 +34,7 @@ function Favorites(props) {
             />:<></>
         ))}
         </ScrollView>
+      <SearchBar handleSearchMovie={handleSearchMovie}/>
       <StatusBar style='light' hidden={false} translucent={false}/>
     </View>
   );

@@ -3,7 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const initialState = {
-    favoriteMovies: []
+    favoriteMovies: [],
+    genreList: [],
 }
 
 const movieSlice = createSlice({
@@ -28,8 +29,12 @@ const movieSlice = createSlice({
             const filteredFavoriteMovies = state.favoriteMovies.filter((movie)=>movie.id != movieId);
             state.favoriteMovies = filteredFavoriteMovies;
         },
+        addGenreList(state, action){
+            const genreInfo = action.payload;
+            state.genreList = genreInfo;
+        }
     },
 });
 
-export const { addFavoriteMovie, removeFavoriteMovie} = movieSlice.actions;
+export const { addFavoriteMovie, removeFavoriteMovie, addGenreList} = movieSlice.actions;
 export default movieSlice.reducer;

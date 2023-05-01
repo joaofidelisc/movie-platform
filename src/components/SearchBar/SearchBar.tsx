@@ -1,11 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import { View, TextInput, TouchableOpacity, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import FilterGenre from '../FilterGenre/FilterGenre';
 
 
 const {width, height} = Dimensions.get('window');
 
-function SearchBar({handleSearchMovie, handleSelectFilter}){
+function SearchBar({handleSearchMovie}){
+    const [openFilter, setOpenFilter] = useState(false);   
+    
+    const handleSelectedFilter = (state) => {
+        setOpenFilter(state)
+    }
+
     return(
         <View style={{position: 'absolute', top: 0, width: '100%', height: height*0.1, backgroundColor: '#6759C0'}}> 
             <TextInput
@@ -14,12 +21,16 @@ function SearchBar({handleSearchMovie, handleSelectFilter}){
             placeholder='Busca'
             onChangeText={handleSearchMovie}
             />
-                <TouchableOpacity 
-                onPress={handleSelectFilter}
+            <TouchableOpacity 
+                onPress={()=>setOpenFilter(true)}
                 style={{position: 'absolute', top: height*0.05, right: width*0.04}}
-                >
-            <Icon name='filter' color = 'white' size={height*0.03}/>
+            >
+                <Icon name='filter' color = 'white' size={height*0.03}/>
             </TouchableOpacity>
+            {
+                openFilter &&
+                <FilterGenre handleSelectedFilter={handleSelectedFilter}/>
+            }
         </View>
     )
 }

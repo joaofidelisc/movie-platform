@@ -1,18 +1,19 @@
-import React from 'react';
-import { StatusBar } from 'expo-status-bar';
+import React, {useState, useEffect} from 'react';
 import { View, Text, Dimensions, TouchableOpacity} from 'react-native';
-
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
+import { styles } from './FilterGenreStyle';
 
 const { width, height } = Dimensions.get('window');
 
+function FilterGenre({handleSelectedFilter}) {
+  const genreList = useSelector(state => state.movie.genreList);
 
-function FilterGenre({handleSelectedFilter, genreList}) {
   return (
-    <View style={{position: 'absolute', top: 0, width: '70%', height: height*0.6, backgroundColor: '#6759C0', right: 0, zIndex: 999}}>
+    <View style={styles.viewContainer}>
         <TouchableOpacity 
           onPress={()=>handleSelectedFilter(false)}
-          style={{position: 'absolute', top: height*0.05, right: width*0.04}}
+          style={styles.closeButton}
         >
           <Icon name='x' color = 'white' size={height*0.03}/>
         </TouchableOpacity>
@@ -21,21 +22,12 @@ function FilterGenre({handleSelectedFilter, genreList}) {
           genreList.genres.map(genre =>(
             <TouchableOpacity
               key={genre.id}
-              style={{width: '50%'}}          
+              style={styles.buttonGenre}          
             >
-              <Text
-                style={{
-                  color: 'white',
-                  fontSize: height*0.022
-                
-                }}
-              >
-                {genre.name}
-              </Text>
+              <Text style={styles.textItem}>{genre.name}</Text>
             </TouchableOpacity>
           ))
         } 
-        <StatusBar style='light' hidden={false} translucent={false}/>
     </View>
   );
 }

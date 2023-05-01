@@ -18,6 +18,7 @@ type ParamList = {
     Lista: undefined;
     Favoritos: undefined;
     Detalhes: undefined;
+    Configurações: undefined;
 };
   
 

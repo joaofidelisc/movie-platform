@@ -103,6 +103,7 @@ function MovieDetails() {
         }
          </ScrollView>
       </ScrollView>
+      <StatusBar style='light' hidden={false} translucent={false}/>
     </View>
   );
 }
